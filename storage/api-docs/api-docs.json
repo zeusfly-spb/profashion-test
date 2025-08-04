@@ -5,6 +5,365 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/comments": {
+            "get": {
+                "tags": [
+                    "Комментарии"
+                ],
+                "summary": "Получить список комментариев",
+                "operationId": "0406f270b674fae17bf23b4206a3004f",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Комментарии"
+                ],
+                "summary": "Создать новый комментарий",
+                "operationId": "300619a0a4003920aafe960e45688102",
+                "requestBody": {
+                    "description": "Данные нового комментария",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "body",
+                                    "user_id",
+                                    "post_id"
+                                ],
+                                "properties": {
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Новый комментарий"
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "post_id": {
+                                        "type": "string",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Комментарий успешно создан"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                }
+            }
+        },
+        "/api/comments/{id}": {
+            "get": {
+                "tags": [
+                    "Комментарии"
+                ],
+                "summary": "Получить комментарий по ID",
+                "operationId": "ca005bcffa22ab29b155dd7aa13b5d6e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID комментария",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о комментарии"
+                    },
+                    "404": {
+                        "description": "Комментарий не найден"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Комментарии"
+                ],
+                "summary": "Обновить комментарий",
+                "operationId": "39e62963cbf897a1b2168683878e0a46",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID комментария",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные для обновления комментария",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Обновленный комментарий"
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "post_id": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Комментарий успешно обновлён"
+                    },
+                    "404": {
+                        "description": "Комментарий не найден"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Комментарии"
+                ],
+                "summary": "Удалить комментарий",
+                "operationId": "721e5dc0c32ef81276203df965767606",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID комментария для удаления",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Комментарий успешно удалён",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Комментарий не найден"
+                    }
+                }
+            }
+        },
+        "/api/posts": {
+            "get": {
+                "tags": [
+                    "Публикации"
+                ],
+                "summary": "Получить список всех публикаций",
+                "operationId": "e9eaf7df702a94f4443677bd1a36cfe6",
+                "responses": {
+                    "200": {
+                        "description": "Успешный ответ"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Публикации"
+                ],
+                "summary": "Создать новую публикацию",
+                "operationId": "4a657e51a0066c64781851f2fd2651e2",
+                "requestBody": {
+                    "description": "Данные новой публикации",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "body"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Заголовок публикации"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Текст публикации"
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Публикация успешно создана"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                }
+            }
+        },
+        "/api/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Публикации"
+                ],
+                "summary": "Получить публикацию по ID",
+                "operationId": "b0f9d92879218f68a376b6edc6467c67",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID публикации",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Информация о публикации"
+                    },
+                    "404": {
+                        "description": "Публикация не найдена"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Публикации"
+                ],
+                "summary": "Обновить публикацию",
+                "operationId": "929614537d76a081a92170a41ed3bdb3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID публикации",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные для обновления публикации",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Новый заголовок"
+                                    },
+                                    "body": {
+                                        "type": "string",
+                                        "example": "Новый текст"
+                                    },
+                                    "user_id": {
+                                        "type": "string",
+                                        "example": "Новый ID автора"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Публикация успешно обновлена"
+                    },
+                    "404": {
+                        "description": "Публикация не найдена"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Публикации"
+                ],
+                "summary": "Удалить публикацию",
+                "operationId": "fad1726bd24cd459fc1525b67985df39",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID публикации для удаления",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Публикация успешно удалена",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Публикация не найдена"
+                    }
+                }
+            }
+        },
         "/api/users": {
             "get": {
                 "tags": [
@@ -177,9 +536,119 @@
                     }
                 }
             }
+        },
+        "/api/users/{id}/posts": {
+            "get": {
+                "tags": [
+                    "Пользователи"
+                ],
+                "summary": "Получить список публикаций пользователя",
+                "operationId": "d7ef6e2584748dccfff7021747efdc6d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список публикаций пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Моя первая публикация"
+                                            },
+                                            "content": {
+                                                "type": "string",
+                                                "example": "Текст публикации..."
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Пользователь не найден"
+                    }
+                }
+            }
+        },
+        "/api/users/{id}/comments": {
+            "get": {
+                "tags": [
+                    "Пользователи"
+                ],
+                "summary": "Получить список комментариев пользователя",
+                "operationId": "9c152d911c7ea5c04671cfadac2a9e7f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список комментариев пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "text": {
+                                                "type": "string",
+                                                "example": "Отличная статья!"
+                                            },
+                                            "post_id": {
+                                                "type": "integer",
+                                                "example": 5
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Пользователь не найден"
+                    }
+                }
+            }
         }
     },
     "tags": [
+        {
+            "name": "Комментарии"
+        },
+        {
+            "name": "Публикации"
+        },
         {
             "name": "Пользователи"
         }

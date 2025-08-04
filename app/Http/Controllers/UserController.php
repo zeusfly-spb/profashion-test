@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\CommentResource;
+use App\Http\Resources\PostResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -185,5 +187,77 @@ class UserController extends Controller
     public function destroy(string $id): JsonResponse
     {
         return response()->json(['result' => User::find($id)->delete()]);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/users/{id}/posts",
+     *     summary="Получить список публикаций пользователя",
+     *     tags={"Пользователи"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID пользователя",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список публикаций пользователя",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="title", type="string", example="Моя первая публикация"),
+     *                 @OA\Property(property="content", type="string", example="Текст публикации..."),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Пользователь не найден"
+     *     )
+     * )
+     */
+    public function posts(string $id): JsonResponse
+    {
+        return response()->json(PostResource::collection(User::find($id)->posts));
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/users/{id}/comments",
+     *     summary="Получить список комментариев пользователя",
+     *     tags={"Пользователи"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID пользователя",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Список комментариев пользователя",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="text", type="string", example="Отличная статья!"),
+     *                 @OA\Property(property="post_id", type="integer", example=5),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Пользователь не найден"
+     *     )
+     * )
+     */
+    public function comments(string $id): JsonResponse
+    {
+        return response()->json(CommentResource::collection(User::find($id)->comments));
     }
 }
